@@ -2,15 +2,15 @@ import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) {
-        Task[] commandArr = new Task[100];
-        Scanner commandObj = new Scanner(System.in);
+        Task[] commands = new Task[100];
+        Scanner in = new Scanner(System.in);
         String command;
         printGreeting();
 
         // Keeps reading and printing user output while input is not bye
         do {
-            command = commandObj.nextLine();
-            commandOutput(commandArr,command);
+            command = in.nextLine();
+            commandOutput(commands,command);
         } while (!command.equals("bye"));
     }
     public static void printLine() {
@@ -26,31 +26,29 @@ public class Duke {
         System.out.println(" Bye. Hope to see you again soon!");
     }
     // Decides on the output for each command
-    public static void commandOutput(Task[] commandArr, String command) {
-        int listNum;
-        int i;
+    public static void commandOutput(Task[] commands, String command) {
         Scanner taskObj = new Scanner(command);
 
         printLine();
         switch (taskObj.next()){
         case "list":
             System.out.println("Here are the tasks in your list:");
-            for (i = 0; i < Task.totalNumOfTasks; i ++){
-                System.out.println(i+1 + ".[" + commandArr[i].getStatusIcon() + "] " + commandArr[i].description);
+            for (int i = 0; i < Task.totalNumOfTasks; i ++){
+                System.out.println(i+1 + ".[" + commands[i].getStatusIcon() + "] " + commands[i].description);
             }
             break;
         case "bye":
             printBye();
             break;
         case "done":
-            listNum = Integer.parseInt(taskObj.next());
-            commandArr[listNum-1].markAsDone();
+            int listNum = Integer.parseInt(taskObj.next());
+            commands[listNum-1].markAsDone();
             System.out.println(" Nice! I've marked this task as done:");
-            System.out.println("  [" + commandArr[listNum-1].getStatusIcon() + "] " + commandArr[listNum-1].description);
+            System.out.println("  [" + commands[listNum-1].getStatusIcon() + "] " + commands[listNum-1].description);
             break;
         default:
-            commandArr[Task.totalNumOfTasks] = new Task(command);
-            System.out.println("added: " + commandArr[Task.totalNumOfTasks-1].description);
+            commands[Task.totalNumOfTasks] = new Task(command);
+            System.out.println("added: " + commands[Task.totalNumOfTasks-1].description);
             break;
         }
         printLine();
