@@ -1,10 +1,8 @@
 import java.util.Scanner;
 
 public class Duke {
-    private static int totalNumOfTasks = 0;
-
     public static void main(String[] args) {
-        String[] commandArr = new String[100];
+        Task[] commandArr = new Task[100];
         Scanner commandObj = new Scanner(System.in);
         String command;
         printGreeting();
@@ -28,22 +26,31 @@ public class Duke {
         System.out.println(" Bye. Hope to see you again soon!");
     }
     // Decides on the output for each command
-    public static void commandOutput(String[] commandArr, String command) {
+    public static void commandOutput(Task[] commandArr, String command) {
+        int listNum;
         int i;
+        Scanner taskObj = new Scanner(command);
+
         printLine();
-        switch (command){
+        switch (taskObj.next()){
         case "list":
-            for (i = 0; i < totalNumOfTasks; i ++){
-                System.out.println(i+1 + ". " + commandArr[i]);
+            System.out.println("Here are the tasks in your list:");
+            for (i = 0; i < Task.totalNumOfTasks; i ++){
+                System.out.println(i+1 + ".[" + commandArr[i].getStatusIcon() + "] " + commandArr[i].description);
             }
             break;
         case "bye":
             printBye();
             break;
+        case "done":
+            listNum = Integer.parseInt(taskObj.next());
+            commandArr[listNum-1].markAsDone();
+            System.out.println(" Nice! I've marked this task as done:");
+            System.out.println("  [" + commandArr[listNum-1].getStatusIcon() + "] " + commandArr[listNum-1].description);
+            break;
         default:
-            commandArr[totalNumOfTasks] = command;
-            System.out.println("added: " + commandArr[totalNumOfTasks]);
-            totalNumOfTasks++;
+            commandArr[Task.totalNumOfTasks] = new Task(command);
+            System.out.println("added: " + commandArr[Task.totalNumOfTasks-1].description);
             break;
         }
         printLine();
