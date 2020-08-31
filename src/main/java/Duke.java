@@ -34,7 +34,7 @@ public class Duke {
         case "list":
             System.out.println("Here are the tasks in your list:");
             for (int i = 0; i < Task.totalNumOfTasks; i ++){
-                System.out.println(i+1 + ".[" + commands[i].getStatusIcon() + "] " + commands[i].description);
+                System.out.println(i+1 + "." + commands[i].toString());
             }
             break;
         case "bye":
@@ -44,11 +44,32 @@ public class Duke {
             int listNum = Integer.parseInt(taskObj.next());
             commands[listNum-1].markAsDone();
             System.out.println(" Nice! I've marked this task as done:");
-            System.out.println("  [" + commands[listNum-1].getStatusIcon() + "] " + commands[listNum-1].description);
+            System.out.println("   " + commands[listNum-1].toString());
+            break;
+        case "todo":
+            String toDoTask = command.substring(4).stripLeading().stripTrailing();
+            commands[Task.totalNumOfTasks] = new ToDo(toDoTask);
+            System.out.println(" Got it. I've added this task: " + System.lineSeparator() + "   " + commands[Task.totalNumOfTasks-1].toString());
+            System.out.println(" Now you have " + Task.totalNumOfTasks + " tasks in the list.");
+            break;
+        case "deadline":
+            int byIndex = command.indexOf("/by");
+            String deadlineDescription = command.substring(8,byIndex).stripLeading().stripTrailing();
+            String deadlineBy = command.substring(byIndex+3).stripLeading().stripTrailing();
+            commands[Task.totalNumOfTasks] = new Deadline(deadlineDescription,deadlineBy);
+            System.out.println(" Got it. I've added this task: " + System.lineSeparator() + "   " + commands[Task.totalNumOfTasks-1].toString());
+            System.out.println(" Now you have " + Task.totalNumOfTasks + " tasks in the list.");
+            break;
+        case "event":
+            int atIndex = command.indexOf("/at");
+            String eventDescription = command.substring(5,atIndex).stripLeading().stripTrailing();
+            String eventAt = command.substring(atIndex+3).stripLeading().stripTrailing();
+            commands[Task.totalNumOfTasks] = new Event(eventDescription,eventAt);
+            System.out.println(" Got it. I've added this task: " + System.lineSeparator() + "   " + commands[Task.totalNumOfTasks-1].toString());
+            System.out.println(" Now you have " + Task.totalNumOfTasks + " tasks in the list.");
             break;
         default:
-            commands[Task.totalNumOfTasks] = new Task(command);
-            System.out.println("added: " + commands[Task.totalNumOfTasks-1].description);
+            System.out.println(" Invalid command!");
             break;
         }
         printLine();
