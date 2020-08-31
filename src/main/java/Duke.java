@@ -14,7 +14,8 @@ public class Duke {
         } while (!command.equals("bye"));
     }
     public static void printLine() {
-        System.out.println("―――――――――――――――――――――――――――――――――");
+        String dash = "\u2500";
+        System.out.println(dash.repeat(50));
     }
     public static void printGreeting(){
         printLine();
