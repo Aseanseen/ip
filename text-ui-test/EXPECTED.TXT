@@ -1,6 +1,12 @@
 ──────────────────────────────────────────────────
  Hello! I'm Duke
  What can I do for you?
+ - Add a todo e.g. todo read book
+ - Add a deadline e.g. deadline do quiz /by 1st Sept
+ - Add an event e.g. event prom /at Mon 6pm
+ - List all added tasks e.g. list
+ - Complete a task e.g. done 1
+ - Say bye to me e.g. bye
 ──────────────────────────────────────────────────
 ──────────────────────────────────────────────────
  Got it. I've added this task: 
