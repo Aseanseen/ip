@@ -8,6 +8,9 @@ public class Task {
         isDone = false;
         totalNumOfTasks++;
     }
+    public static int getTotalNumOfTasks() {
+        return totalNumOfTasks;
+    }
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
