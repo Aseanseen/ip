@@ -25,11 +25,11 @@ public class Duke {
             command = in.nextLine();
             try {
                 getCommandOutput(tasks, command);
-            } catch (NoSuchElementException e) {
+            } catch (NoSuchElementException exception) {
                 System.out.println(" Stop feeding me emptiness");
                 printLine();
-            } catch (DukeException e) {
-                System.out.println(e.toString());
+            } catch (DukeException exception) {
+                System.out.println(exception.toString());
                 printLine();
             }
         } while (!command.equals("bye"));
@@ -61,6 +61,7 @@ public class Duke {
     public static void getCommandOutput(Task[] tasks, String command) throws DukeException{
         Scanner taskObj = new Scanner(command);
         int totalNumOfTasks = Task.getTotalNumOfTasks();
+        // Initialisation of enum
         typeOfTasks typeOfTask;
         printLine();
         switch (taskObj.next()){
@@ -98,20 +99,21 @@ public class Duke {
             System.out.println(i+1 + "." + tasks[i].toString());
         }
     }
-
+    // Checks for empty date/time
     public static void checkDateTime(typeOfTasks entryType, String taskAt) throws IllegalDateTimeException {
         if (taskAt.isEmpty()){
             throw new IllegalDateTimeException(entryType.toString());
         }
     }
-
+    // Checks for empty descriptions
     public static void checkDescription(typeOfTasks entryType, String taskDescription) throws IllegalDescriptionException {
         if (taskDescription.isEmpty()){
             throw new IllegalDescriptionException(entryType.toString());
         }
     }
+    // Combines the empty descriptions and date/time checks
     public static void checkDukeException(typeOfTasks entryType, String taskDescription, String taskAt) throws DukeException {
-        if (!entryType.equals(typeOfTasks.TODO) || taskAt != null) {
+        if (!entryType.equals(typeOfTasks.TODO)) {
             checkDateTime(entryType, taskAt);
         }
         checkDescription(entryType, taskDescription);
@@ -119,7 +121,7 @@ public class Duke {
 
     public static void addEvent(Task[] tasks, String command, int totalNumOfTasks, typeOfTasks typeOfEntry) throws DukeException {
         int indexOfAt = command.indexOf("/at");
-
+        // Command /at not found
         if (indexOfAt < 0) {
             throw new DukeException("Please enter a proper " + typeOfEntry);
         } else {
@@ -132,7 +134,7 @@ public class Duke {
     }
     public static void addDeadline(Task[] tasks, String command, int totalNumOfTasks, typeOfTasks typeOfEntry) throws DukeException {
         int indexOfBy = command.indexOf("/by");
-
+        // Command /by not found
         if (indexOfBy < 0) {
             throw new DukeException("Please enter a proper " + typeOfEntry);
         } else {
@@ -154,14 +156,13 @@ public class Duke {
     public static void markAsDone(Task[] tasks, Scanner taskObj) {
         int listNum = Integer.parseInt(taskObj.next());
         int arrayNum = listNum -1;
-        if(tasks[arrayNum].isDone){
+        if(tasks[arrayNum].getIsDone()){
             System.out.println(" This task has already been marked as done!");
-        }
-        else{
+        } else{
             tasks[arrayNum].markAsDone();
             System.out.println(" Nice! I've marked this task as done:");
         }
-        System.out.println("   " + tasks[listNum-1].toString());
+        System.out.println("   " + tasks[arrayNum].toString());
     }
 
     public static void acknowledgeAddedTask(Task task) {
