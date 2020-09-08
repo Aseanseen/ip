@@ -7,6 +7,7 @@ public class Duke {
     final static int LENGTH_BY = 3;
     final static int LENGTH_AT = 3;
     final static int SIZE_TASKS = 100;
+    final static int SIZE_LINE = 90;
 
     public static void main(String[] args) {
         Task[] tasks = new Task[SIZE_TASKS];
@@ -22,7 +23,7 @@ public class Duke {
     }
     public static void printLine() {
         String dash = "\u2500";
-        System.out.println(dash.repeat(60));
+        System.out.println(dash.repeat(SIZE_LINE));
     }
     public static void printInstructions() {
         System.out.println(" - Add a todo e.g. todo read book");
@@ -69,7 +70,7 @@ public class Duke {
             addEvent(tasks, command, totalNumOfTasks);
             break;
         default:
-            System.out.println(" Invalid command!");
+            System.out.println(" Command's power level too high! Please try something else or improve my power level!");
             break;
         }
         printLine();
@@ -82,29 +83,65 @@ public class Duke {
         }
     }
 
-    public static void addEvent(Task[] tasks, String command, int totalNumOfTasks) {
-        int indexOfAt = command.indexOf("/at");
-        String eventDescription = command.substring(LENGTH_EVENT,indexOfAt).stripLeading().stripTrailing();
-        String eventAt = command.substring(indexOfAt + LENGTH_AT).stripLeading().stripTrailing();
-        tasks[totalNumOfTasks] = new Event(eventDescription,eventAt);
+    public static void checkDateTime(String taskAt) throws IllegalDateTimeException {
+        if (taskAt.equals("")){
+            throw new IllegalDateTimeException();
+        }
+    }
 
-        acknowledgeAddedTask(tasks[totalNumOfTasks]);
+    public static void checkDescription(String taskDescription) throws IllegalDescriptionException {
+        if (taskDescription.equals("")){
+            throw new IllegalDescriptionException();
+        }
+    }
+
+    public static void addEvent(Task[] tasks, String command, int totalNumOfTasks) {
+        try {
+            int indexOfAt = command.indexOf("/at");
+            String eventDescription = command.substring(LENGTH_EVENT, indexOfAt).stripLeading().stripTrailing();
+            String eventAt = command.substring(indexOfAt + LENGTH_AT).stripLeading().stripTrailing();
+            checkDescription(eventDescription);
+            checkDateTime(eventAt);
+            tasks[totalNumOfTasks] = new Event(eventDescription, eventAt);
+            acknowledgeAddedTask(tasks[totalNumOfTasks]);
+        } catch (IndexOutOfBoundsException e){
+            System.out.println(" Bad command! Please state the event properly! e.g. event cs tuition /at 10th Sep 8pm");
+        } catch (IllegalDateTimeException e){
+            System.out.println(" Bad command! Give me the date/time!");
+        } catch (IllegalDescriptionException e){
+            System.out.println(" Bad command! Give me the description!");
+        }
     }
 
     public static void addDeadline(Task[] tasks, String command, int totalNumOfTasks) {
-        int indexOfBy = command.indexOf("/by");
-        String deadlineDescription = command.substring(LENGTH_DEADLINE,indexOfBy).stripLeading().stripTrailing();
-        String deadlineBy = command.substring(indexOfBy + LENGTH_BY).stripLeading().stripTrailing();
-        tasks[totalNumOfTasks] = new Deadline(deadlineDescription,deadlineBy);
-
-        acknowledgeAddedTask(tasks[totalNumOfTasks]);
+        try {
+            int indexOfBy = command.indexOf("/by");
+            String deadlineDescription = command.substring(LENGTH_DEADLINE, indexOfBy).stripLeading().stripTrailing();
+            String deadlineBy = command.substring(indexOfBy + LENGTH_BY).stripLeading().stripTrailing();
+            checkDescription(deadlineDescription);
+            checkDateTime(deadlineBy);
+            tasks[totalNumOfTasks] = new Deadline(deadlineDescription, deadlineBy);
+            acknowledgeAddedTask(tasks[totalNumOfTasks]);
+        } catch (IndexOutOfBoundsException e){
+            System.out.println(" Bad command! Please state the deadline properly! e.g. deadline submit cs report /by 10th Sep");
+        } catch (IllegalDateTimeException e){
+            System.out.println(" Bad command! Give me the date/time!");
+        } catch (IllegalDescriptionException e){
+            System.out.println(" Bad command! Give me the description!");
+        }
     }
 
     public static void addTodo(Task[] tasks, String command, int totalNumOfTasks) {
-        String toDoTask = command.substring(LENGTH_TODO).stripLeading().stripTrailing();
-        tasks[totalNumOfTasks] = new ToDo(toDoTask);
-
-        acknowledgeAddedTask(tasks[totalNumOfTasks]);
+        try{
+            String toDoTask = command.substring(LENGTH_TODO).stripLeading().stripTrailing();
+            checkDescription(toDoTask);
+            tasks[totalNumOfTasks] = new ToDo(toDoTask);
+            acknowledgeAddedTask(tasks[totalNumOfTasks]);
+        } catch (IndexOutOfBoundsException e){
+            System.out.println(" Bad command! Please state the task to be done! e.g. todo read book");
+        } catch (IllegalDescriptionException e){
+            System.out.println(" Bad command! Give me the description!");
+        }
     }
 
     public static void markAsDone(Task[] tasks, Scanner taskObj) {
