@@ -11,6 +11,9 @@ public class Task {
     public static int getTotalNumOfTasks() {
         return totalNumOfTasks;
     }
+    public boolean getIsDone() {
+        return isDone;
+    }
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
