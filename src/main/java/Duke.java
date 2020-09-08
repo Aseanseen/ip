@@ -1,3 +1,4 @@
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Duke {
@@ -9,6 +10,10 @@ public class Duke {
     final static int SIZE_TASKS = 100;
     final static int SIZE_LINE = 90;
 
+    enum typeOfTasks{
+        TODO, EVENT, DEADLINE
+    }
+
     public static void main(String[] args) {
         Task[] tasks = new Task[SIZE_TASKS];
         Scanner in = new Scanner(System.in);
@@ -18,7 +23,15 @@ public class Duke {
         // Keeps reading and printing user output while input is not bye
         do {
             command = in.nextLine();
-            getCommandOutput(tasks,command);
+            try {
+                getCommandOutput(tasks, command);
+            } catch (NoSuchElementException e) {
+                System.out.println(" Stop feeding me emptiness");
+                printLine();
+            } catch (DukeException e) {
+                System.out.println(e.toString());
+                printLine();
+            }
         } while (!command.equals("bye"));
     }
     public static void printLine() {
@@ -45,10 +58,10 @@ public class Duke {
     }
 
     // Decides on the output for each command
-    public static void getCommandOutput(Task[] tasks, String command) {
+    public static void getCommandOutput(Task[] tasks, String command) throws DukeException{
         Scanner taskObj = new Scanner(command);
         int totalNumOfTasks = Task.getTotalNumOfTasks();
-
+        typeOfTasks typeOfTask;
         printLine();
         switch (taskObj.next()){
         case "list":
@@ -61,13 +74,16 @@ public class Duke {
             markAsDone(tasks, taskObj);
             break;
         case "todo":
-            addTodo(tasks, command, totalNumOfTasks);
+            typeOfTask = typeOfTasks.TODO;
+            addTodo(tasks, command, totalNumOfTasks,typeOfTask);
             break;
         case "deadline":
-            addDeadline(tasks, command, totalNumOfTasks);
+            typeOfTask = typeOfTasks.DEADLINE;
+            addDeadline(tasks, command, totalNumOfTasks,typeOfTask);
             break;
         case "event":
-            addEvent(tasks, command, totalNumOfTasks);
+            typeOfTask = typeOfTasks.EVENT;
+            addEvent(tasks, command, totalNumOfTasks,typeOfTask);
             break;
         default:
             System.out.println(" Command's power level too high! Please try something else or improve my power level!");
@@ -83,74 +99,66 @@ public class Duke {
         }
     }
 
-    public static void checkDateTime(String taskAt) throws IllegalDateTimeException {
-        if (taskAt.equals("")){
-            throw new IllegalDateTimeException();
+    public static void checkDateTime(typeOfTasks entryType, String taskAt) throws IllegalDateTimeException {
+        if (taskAt.isEmpty()){
+            throw new IllegalDateTimeException(entryType.toString());
         }
     }
 
-    public static void checkDescription(String taskDescription) throws IllegalDescriptionException {
-        if (taskDescription.equals("")){
-            throw new IllegalDescriptionException();
+    public static void checkDescription(typeOfTasks entryType, String taskDescription) throws IllegalDescriptionException {
+        if (taskDescription.isEmpty()){
+            throw new IllegalDescriptionException(entryType.toString());
         }
     }
+    public static void checkDukeException(typeOfTasks entryType, String taskDescription, String taskAt) throws DukeException {
+        if (!entryType.equals(typeOfTasks.TODO) || taskAt != null) {
+            checkDateTime(entryType, taskAt);
+        }
+        checkDescription(entryType, taskDescription);
+    }
 
-    public static void addEvent(Task[] tasks, String command, int totalNumOfTasks) {
-        try {
-            int indexOfAt = command.indexOf("/at");
+    public static void addEvent(Task[] tasks, String command, int totalNumOfTasks, typeOfTasks typeOfEntry) throws DukeException {
+        int indexOfAt = command.indexOf("/at");
+
+        if (indexOfAt < 0) {
+            throw new DukeException("Please enter a proper " + typeOfEntry);
+        } else {
             String eventDescription = command.substring(LENGTH_EVENT, indexOfAt).stripLeading().stripTrailing();
             String eventAt = command.substring(indexOfAt + LENGTH_AT).stripLeading().stripTrailing();
-            checkDescription(eventDescription);
-            checkDateTime(eventAt);
+            checkDukeException(typeOfEntry, eventDescription, eventAt);
             tasks[totalNumOfTasks] = new Event(eventDescription, eventAt);
             acknowledgeAddedTask(tasks[totalNumOfTasks]);
-        } catch (IndexOutOfBoundsException e){
-            System.out.println(" Bad command! Please state the event properly! e.g. event cs tuition /at 10th Sep 8pm");
-        } catch (IllegalDateTimeException e){
-            System.out.println(" Bad command! Give me the date/time!");
-        } catch (IllegalDescriptionException e){
-            System.out.println(" Bad command! Give me the description!");
         }
     }
+    public static void addDeadline(Task[] tasks, String command, int totalNumOfTasks, typeOfTasks typeOfEntry) throws DukeException {
+        int indexOfBy = command.indexOf("/by");
 
-    public static void addDeadline(Task[] tasks, String command, int totalNumOfTasks) {
-        try {
-            int indexOfBy = command.indexOf("/by");
+        if (indexOfBy < 0) {
+            throw new DukeException("Please enter a proper " + typeOfEntry);
+        } else {
             String deadlineDescription = command.substring(LENGTH_DEADLINE, indexOfBy).stripLeading().stripTrailing();
             String deadlineBy = command.substring(indexOfBy + LENGTH_BY).stripLeading().stripTrailing();
-            checkDescription(deadlineDescription);
-            checkDateTime(deadlineBy);
+            checkDukeException(typeOfEntry, deadlineDescription, deadlineBy);
             tasks[totalNumOfTasks] = new Deadline(deadlineDescription, deadlineBy);
             acknowledgeAddedTask(tasks[totalNumOfTasks]);
-        } catch (IndexOutOfBoundsException e){
-            System.out.println(" Bad command! Please state the deadline properly! e.g. deadline submit cs report /by 10th Sep");
-        } catch (IllegalDateTimeException e){
-            System.out.println(" Bad command! Give me the date/time!");
-        } catch (IllegalDescriptionException e){
-            System.out.println(" Bad command! Give me the description!");
         }
     }
 
-    public static void addTodo(Task[] tasks, String command, int totalNumOfTasks) {
-        try{
-            String toDoTask = command.substring(LENGTH_TODO).stripLeading().stripTrailing();
-            checkDescription(toDoTask);
-            tasks[totalNumOfTasks] = new ToDo(toDoTask);
-            acknowledgeAddedTask(tasks[totalNumOfTasks]);
-        } catch (IndexOutOfBoundsException e){
-            System.out.println(" Bad command! Please state the task to be done! e.g. todo read book");
-        } catch (IllegalDescriptionException e){
-            System.out.println(" Bad command! Give me the description!");
-        }
+    public static void addTodo(Task[] tasks, String command, int totalNumOfTasks, typeOfTasks typeOfEntry) throws DukeException{
+        String toDoTask = command.substring(LENGTH_TODO).stripLeading().stripTrailing();
+        checkDukeException(typeOfEntry, toDoTask, null);
+        tasks[totalNumOfTasks] = new ToDo(toDoTask);
+        acknowledgeAddedTask(tasks[totalNumOfTasks]);
     }
 
     public static void markAsDone(Task[] tasks, Scanner taskObj) {
         int listNum = Integer.parseInt(taskObj.next());
-        if(tasks[listNum-1].isDone){
+        int arrayNum = listNum -1;
+        if(tasks[arrayNum].isDone){
             System.out.println(" This task has already been marked as done!");
         }
         else{
-            tasks[listNum-1].markAsDone();
+            tasks[arrayNum].markAsDone();
             System.out.println(" Nice! I've marked this task as done:");
         }
         System.out.println("   " + tasks[listNum-1].toString());
