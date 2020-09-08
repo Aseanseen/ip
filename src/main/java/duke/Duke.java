@@ -1,3 +1,13 @@
+package duke;
+
+import duke.command.DukeException;
+import duke.command.IllegalDateTimeException;
+import duke.command.IllegalDescriptionException;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
+
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -48,7 +58,7 @@ public class Duke {
     }
     public static void printGreeting(){
         printLine();
-        System.out.println(" Hello! I'm Duke");
+        System.out.println(" Hello! I'm duke.Duke");
         System.out.println(" What can I do for you?");
         printInstructions();
         printLine();

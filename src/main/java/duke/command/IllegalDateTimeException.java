@@ -1,3 +1,5 @@
+package duke.command;
+
 public class IllegalDateTimeException extends DukeException{
     public IllegalDateTimeException(String message) {
         super(message);
