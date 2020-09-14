@@ -8,6 +8,7 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -17,15 +18,14 @@ public class Duke {
     final static int LENGTH_EVENT = 5;
     final static int LENGTH_BY = 3;
     final static int LENGTH_AT = 3;
-    final static int SIZE_TASKS = 100;
     final static int SIZE_LINE = 90;
 
     enum typeOfTasks{
         TODO, EVENT, DEADLINE
     }
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
-        Task[] tasks = new Task[SIZE_TASKS];
         Scanner in = new Scanner(System.in);
         String command;
         printGreeting();
@@ -34,9 +34,12 @@ public class Duke {
         do {
             command = in.nextLine();
             try {
-                getCommandOutput(tasks, command);
+                getCommandOutput(command);
             } catch (NoSuchElementException exception) {
                 System.out.println(" Stop feeding me emptiness");
+                printLine();
+            } catch (IndexOutOfBoundsException exception) {
+                System.out.println(" Stop feeding me things that do not exist!");
                 printLine();
             } catch (DukeException exception) {
                 System.out.println(exception.toString());
@@ -54,6 +57,7 @@ public class Duke {
         System.out.println(" - Add an event e.g. event prom /at Mon 6pm");
         System.out.println(" - List all added tasks e.g. list");
         System.out.println(" - Complete a task e.g. done 1");
+        System.out.println(" - Delete a task e.g. delete 1");
         System.out.println(" - Say bye to me e.g. bye");
     }
     public static void printGreeting(){
@@ -68,7 +72,7 @@ public class Duke {
     }
 
     // Decides on the output for each command
-    public static void getCommandOutput(Task[] tasks, String command) throws DukeException{
+    public static void getCommandOutput(String command) throws DukeException{
         Scanner taskObj = new Scanner(command);
         int totalNumOfTasks = Task.getTotalNumOfTasks();
         // Initialisation of enum
@@ -76,25 +80,28 @@ public class Duke {
         printLine();
         switch (taskObj.next()){
         case "list":
-            printTaskList(tasks, totalNumOfTasks);
+            printTaskList(totalNumOfTasks);
             break;
         case "bye":
             printBye();
             break;
         case "done":
-            markAsDone(tasks, taskObj);
+            markAsDone(taskObj);
             break;
         case "todo":
             typeOfTask = typeOfTasks.TODO;
-            addTodo(tasks, command, totalNumOfTasks,typeOfTask);
+            addTodo(command, typeOfTask);
             break;
         case "deadline":
             typeOfTask = typeOfTasks.DEADLINE;
-            addDeadline(tasks, command, totalNumOfTasks,typeOfTask);
+            addDeadline(command, typeOfTask);
             break;
         case "event":
             typeOfTask = typeOfTasks.EVENT;
-            addEvent(tasks, command, totalNumOfTasks,typeOfTask);
+            addEvent(command, typeOfTask);
+            break;
+        case "delete":
+            removeTask(taskObj);
             break;
         default:
             System.out.println(" Command's power level too high! Please try something else or improve my power level!");
@@ -103,15 +110,18 @@ public class Duke {
         printLine();
     }
 
-    public static void printTaskList(Task[] tasks, int totalNumOfTasks) {
+    public static void printTaskList(int totalNumOfTasks) {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < totalNumOfTasks; i ++){
-            System.out.println(i+1 + "." + tasks[i].toString());
+            System.out.println(i+1 + "." + tasks.get(i).toString());
+        }
+        if (totalNumOfTasks == 0){
+            System.out.println("Please feed me ...");
         }
     }
     // Checks for empty date/time
-    public static void checkDateTime(typeOfTasks entryType, String taskAt) throws IllegalDateTimeException {
-        if (taskAt.isEmpty()){
+    public static void checkDateTime(typeOfTasks entryType, String taskDateTime) throws IllegalDateTimeException {
+        if (taskDateTime.isEmpty()){
             throw new IllegalDateTimeException(entryType.toString());
         }
     }
@@ -122,14 +132,14 @@ public class Duke {
         }
     }
     // Combines the empty descriptions and date/time checks
-    public static void checkDukeException(typeOfTasks entryType, String taskDescription, String taskAt) throws DukeException {
+    public static void checkDukeException(typeOfTasks entryType, String taskDescription, String taskDateTime) throws DukeException {
         if (!entryType.equals(typeOfTasks.TODO)) {
-            checkDateTime(entryType, taskAt);
+            checkDateTime(entryType, taskDateTime);
         }
         checkDescription(entryType, taskDescription);
     }
 
-    public static void addEvent(Task[] tasks, String command, int totalNumOfTasks, typeOfTasks typeOfEntry) throws DukeException {
+    public static void addEvent(String command, typeOfTasks typeOfEntry) throws DukeException {
         int indexOfAt = command.indexOf("/at");
         // Command /at not found
         if (indexOfAt < 0) {
@@ -138,11 +148,12 @@ public class Duke {
             String eventDescription = command.substring(LENGTH_EVENT, indexOfAt).stripLeading().stripTrailing();
             String eventAt = command.substring(indexOfAt + LENGTH_AT).stripLeading().stripTrailing();
             checkDukeException(typeOfEntry, eventDescription, eventAt);
-            tasks[totalNumOfTasks] = new Event(eventDescription, eventAt);
-            acknowledgeAddedTask(tasks[totalNumOfTasks]);
+            Event event = new Event(eventDescription, eventAt);
+            tasks.add(event);
+            acknowledgeAddedTask(event);
         }
     }
-    public static void addDeadline(Task[] tasks, String command, int totalNumOfTasks, typeOfTasks typeOfEntry) throws DukeException {
+    public static void addDeadline(String command, typeOfTasks typeOfEntry) throws DukeException {
         int indexOfBy = command.indexOf("/by");
         // Command /by not found
         if (indexOfBy < 0) {
@@ -151,28 +162,39 @@ public class Duke {
             String deadlineDescription = command.substring(LENGTH_DEADLINE, indexOfBy).stripLeading().stripTrailing();
             String deadlineBy = command.substring(indexOfBy + LENGTH_BY).stripLeading().stripTrailing();
             checkDukeException(typeOfEntry, deadlineDescription, deadlineBy);
-            tasks[totalNumOfTasks] = new Deadline(deadlineDescription, deadlineBy);
-            acknowledgeAddedTask(tasks[totalNumOfTasks]);
+            Deadline deadline = new Deadline(deadlineDescription, deadlineBy);
+            tasks.add(deadline);
+            acknowledgeAddedTask(deadline);
         }
     }
 
-    public static void addTodo(Task[] tasks, String command, int totalNumOfTasks, typeOfTasks typeOfEntry) throws DukeException{
-        String toDoTask = command.substring(LENGTH_TODO).stripLeading().stripTrailing();
-        checkDukeException(typeOfEntry, toDoTask, null);
-        tasks[totalNumOfTasks] = new ToDo(toDoTask);
-        acknowledgeAddedTask(tasks[totalNumOfTasks]);
+    public static void addTodo(String command, typeOfTasks typeOfEntry) throws DukeException{
+        String toDoDescription = command.substring(LENGTH_TODO).stripLeading().stripTrailing();
+        checkDukeException(typeOfEntry, toDoDescription, null);
+        ToDo toDo = new ToDo(toDoDescription);
+        tasks.add(toDo);
+        acknowledgeAddedTask(toDo);
     }
 
-    public static void markAsDone(Task[] tasks, Scanner taskObj) {
+    public static void removeTask(Scanner taskObj) throws IndexOutOfBoundsException{
         int listNum = Integer.parseInt(taskObj.next());
         int arrayNum = listNum -1;
-        if(tasks[arrayNum].getIsDone()){
+        String taskToBeDeleted = tasks.get(arrayNum).toString();
+        System.out.println(" Ok! I have removed this task!");
+        System.out.println("   " + taskToBeDeleted);
+        tasks.remove(arrayNum).removeTask();
+    }
+
+    public static void markAsDone(Scanner taskObj) throws IndexOutOfBoundsException{
+        int listNum = Integer.parseInt(taskObj.next());
+        int arrayNum = listNum -1;
+        if(tasks.get(arrayNum).getIsDone()){
             System.out.println(" This task has already been marked as done!");
         } else{
-            tasks[arrayNum].markAsDone();
+            tasks.get(arrayNum).markAsDone();
             System.out.println(" Nice! I've marked this task as done:");
         }
-        System.out.println("   " + tasks[arrayNum].toString());
+        System.out.println("   " + tasks.get(arrayNum).toString());
     }
 
     public static void acknowledgeAddedTask(Task task) {
