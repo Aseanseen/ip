@@ -10,10 +10,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-import static duke.Duke.LENGTH_AT;
-import static duke.Duke.LENGTH_BY;
-
 public abstract class ReadFromFile {
+    final static int LENGTH_BY = 4;
+    final static int LENGTH_AT = 4;
+
     // File paths specified in an OS-independent way
     static String home = System.getProperty("user.home");
     static java.nio.file.Path filePath = java.nio.file.Paths.get(home, "Desktop", "ip", "data", "out.txt");
@@ -58,16 +58,18 @@ public abstract class ReadFromFile {
             updateIsDone(tasks, i, taskIsDone);
             break;
         case "E":
-            int indexOfAt = task.indexOf("at:");
+            int indexOfAt = task.indexOf("(at:");
             String eventDescription = task.substring(indexOfTaskDescription, indexOfAt).stripLeading().stripTrailing();
             String eventAt = task.substring(indexOfAt + LENGTH_AT).stripLeading().stripTrailing();
+            eventAt = eventAt.substring(0,eventAt.length()-1);
             tasks[i] = new Event(eventDescription,eventAt);
             updateIsDone(tasks, i, taskIsDone);
             break;
         case "D":
-            int indexOfBy = task.indexOf("by:");
+            int indexOfBy = task.indexOf("(by:");
             String deadlineDescription = task.substring(indexOfTaskDescription, indexOfBy).stripLeading().stripTrailing();
             String deadlineBy = task.substring(indexOfBy + LENGTH_BY).stripLeading().stripTrailing();
+            deadlineBy = deadlineBy.substring(0,deadlineBy.length()-1);
             tasks[i] = new Deadline(deadlineDescription,deadlineBy);
             updateIsDone(tasks, i, taskIsDone);
             break;
