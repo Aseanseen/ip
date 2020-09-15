@@ -58,14 +58,14 @@ public abstract class ReadFromFile {
             updateIsDone(tasks, i, taskIsDone);
             break;
         case "E":
-            int indexOfAt = task.indexOf("/at");
+            int indexOfAt = task.indexOf("at:");
             String eventDescription = task.substring(indexOfTaskDescription, indexOfAt).stripLeading().stripTrailing();
             String eventAt = task.substring(indexOfAt + LENGTH_AT).stripLeading().stripTrailing();
             tasks[i] = new Event(eventDescription,eventAt);
             updateIsDone(tasks, i, taskIsDone);
             break;
         case "D":
-            int indexOfBy = task.indexOf("/by");
+            int indexOfBy = task.indexOf("by:");
             String deadlineDescription = task.substring(indexOfTaskDescription, indexOfBy).stripLeading().stripTrailing();
             String deadlineBy = task.substring(indexOfBy + LENGTH_BY).stripLeading().stripTrailing();
             tasks[i] = new Deadline(deadlineDescription,deadlineBy);
