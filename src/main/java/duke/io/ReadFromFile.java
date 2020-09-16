@@ -78,7 +78,7 @@ public abstract class ReadFromFile {
     }
     // Updates the variable isDone of the Task class
     public static void updateIsDone(ArrayList<Task> tasks, int i, String taskIsDone) {
-        if (taskIsDone.equals("\u2713")) {
+        if (taskIsDone.equals("1")) {
             tasks.get(i).markAsDone();
         }
     }
