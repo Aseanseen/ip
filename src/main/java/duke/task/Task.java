@@ -10,6 +10,9 @@ public class Task {
         isDone = false;
         totalNumOfTasks++;
     }
+    public void removeTask(){
+        totalNumOfTasks--;
+    }
     public static int getTotalNumOfTasks() {
         return totalNumOfTasks;
     }
