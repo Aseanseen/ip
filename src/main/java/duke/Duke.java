@@ -29,7 +29,8 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String command;
         printGreeting();
-
+        // Load saved data if any
+        ReadFromFile.readFromMem(tasks);
         // Keeps reading and printing user output while input is not bye
         do {
             command = in.nextLine();
@@ -62,7 +63,7 @@ public class Duke {
     }
     public static void printGreeting(){
         printLine();
-        System.out.println(" Hello! I'm duke.Duke");
+        System.out.println(" Hello! I'm Duke");
         System.out.println(" What can I do for you?");
         printInstructions();
         printLine();
@@ -107,6 +108,7 @@ public class Duke {
             System.out.println(" Command's power level too high! Please try something else or improve my power level!");
             break;
         }
+        WriteToFile.updateFile(tasks, Task.getTotalNumOfTasks());
         printLine();
     }
 

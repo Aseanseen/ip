@@ -1,0 +1,4 @@
+1.[T][✘] read book
+2.[D][✓] do quiz (by: 1st Sept)
+3.[E][✓] prom (at: Mon 6pm)
+4.[E][✘] test (at: 4pm)
