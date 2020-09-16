@@ -1,4 +1,4 @@
-package duke;
+package duke.io;
 
 import duke.task.Deadline;
 import duke.task.Event;
@@ -8,6 +8,7 @@ import duke.task.ToDo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class ReadFromFile {
@@ -18,7 +19,7 @@ public abstract class ReadFromFile {
     static String home = System.getProperty("user.home");
     static java.nio.file.Path filePath = java.nio.file.Paths.get(home, "Desktop", "ip", "data", "out.txt");
 
-    public static void readFromMem(Task[] tasks){
+    public static void readFromMem(ArrayList<Task> tasks){
         boolean fileExists = java.nio.file.Files.exists(filePath);
         if (fileExists) {
             int i = 0;
@@ -30,7 +31,7 @@ public abstract class ReadFromFile {
         }
     }
 
-    public static void scanMem(Task[] tasks, int i) throws FileNotFoundException {
+    public static void scanMem(ArrayList<Task> tasks, int i) throws FileNotFoundException {
         File file = new File(String.valueOf(filePath));
         Scanner fileObj = new Scanner(file);
         // Goes through every line of out.txt
@@ -42,7 +43,7 @@ public abstract class ReadFromFile {
     }
 
     // Converts a line of out.txt to be added to tasks
-    public static void parse(Task[] tasks, String task, int i){
+    public static void parse(ArrayList<Task> tasks, String task, int i){
         int indexOfTaskType = task.indexOf("[") + 1;
         int indexOfTaskState = task.indexOf("[",indexOfTaskType) + 1;
         int indexOfTaskDescription = task.indexOf("]",indexOfTaskState) + 1;
@@ -54,7 +55,7 @@ public abstract class ReadFromFile {
         switch(taskType){
         case "T":
             String toDoDescription = taskDescription.stripLeading().stripTrailing();
-            tasks[i] = new ToDo(toDoDescription);
+            tasks.add(new ToDo(toDoDescription));
             updateIsDone(tasks, i, taskIsDone);
             break;
         case "E":
@@ -62,7 +63,7 @@ public abstract class ReadFromFile {
             String eventDescription = task.substring(indexOfTaskDescription, indexOfAt).stripLeading().stripTrailing();
             String eventAt = task.substring(indexOfAt + LENGTH_AT).stripLeading().stripTrailing();
             eventAt = eventAt.substring(0,eventAt.length()-1);
-            tasks[i] = new Event(eventDescription,eventAt);
+            tasks.add(new Event(eventDescription,eventAt));
             updateIsDone(tasks, i, taskIsDone);
             break;
         case "D":
@@ -70,15 +71,15 @@ public abstract class ReadFromFile {
             String deadlineDescription = task.substring(indexOfTaskDescription, indexOfBy).stripLeading().stripTrailing();
             String deadlineBy = task.substring(indexOfBy + LENGTH_BY).stripLeading().stripTrailing();
             deadlineBy = deadlineBy.substring(0,deadlineBy.length()-1);
-            tasks[i] = new Deadline(deadlineDescription,deadlineBy);
+            tasks.add(new Deadline(deadlineDescription,deadlineBy));
             updateIsDone(tasks, i, taskIsDone);
             break;
         }
     }
     // Updates the variable isDone of the Task class
-    public static void updateIsDone(Task[] tasks, int i, String taskIsDone) {
+    public static void updateIsDone(ArrayList<Task> tasks, int i, String taskIsDone) {
         if (taskIsDone.equals("\u2713")) {
-            tasks[i].markAsDone();
+            tasks.get(i).markAsDone();
         }
     }
 }
