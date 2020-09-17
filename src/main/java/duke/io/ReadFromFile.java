@@ -16,8 +16,8 @@ public abstract class ReadFromFile {
     final static int LENGTH_AT = 4;
 
     // File paths specified in an OS-independent way
-    static String home = System.getProperty("user.home");
-    static java.nio.file.Path filePath = java.nio.file.Paths.get(home, "Desktop", "ip", "data", "out.txt");
+    static String root = System.getProperty("user.dir");
+    static java.nio.file.Path filePath = java.nio.file.Paths.get(root, "data", "out.txt");
 
     public static void readFromMem(ArrayList<Task> tasks){
         boolean fileExists = java.nio.file.Files.exists(filePath);

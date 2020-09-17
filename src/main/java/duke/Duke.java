@@ -90,27 +90,31 @@ public class Duke {
             break;
         case "done":
             markAsDone(taskObj);
+            WriteToFile.updateFile(tasks, Task.getTotalNumOfTasks());
             break;
         case "todo":
             typeOfTask = typeOfTasks.TODO;
             addTodo(command, typeOfTask);
+            WriteToFile.updateFile(tasks, Task.getTotalNumOfTasks());
             break;
         case "deadline":
             typeOfTask = typeOfTasks.DEADLINE;
             addDeadline(command, typeOfTask);
+            WriteToFile.updateFile(tasks, Task.getTotalNumOfTasks());
             break;
         case "event":
             typeOfTask = typeOfTasks.EVENT;
             addEvent(command, typeOfTask);
+            WriteToFile.updateFile(tasks, Task.getTotalNumOfTasks());
             break;
         case "delete":
             removeTask(taskObj);
+            WriteToFile.updateFile(tasks, Task.getTotalNumOfTasks());
             break;
         default:
             System.out.println(" Command's power level too high! Please try something else or improve my power level!");
             break;
         }
-        WriteToFile.updateFile(tasks, Task.getTotalNumOfTasks());
         printLine();
     }
 
