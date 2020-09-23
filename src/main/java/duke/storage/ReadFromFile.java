@@ -1,4 +1,4 @@
-package duke.io;
+package duke.storage;
 
 import duke.task.Deadline;
 import duke.task.Event;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public abstract class ReadFromFile {
+public abstract class ReadFromFile{
     final static int LENGTH_BY = 4;
     final static int LENGTH_AT = 4;
 
@@ -19,7 +19,7 @@ public abstract class ReadFromFile {
     static String root = System.getProperty("user.dir");
     static java.nio.file.Path filePath = java.nio.file.Paths.get(root, "data", "out.txt");
 
-    public static void readFromMem(ArrayList<Task> tasks){
+    public static void readMem(ArrayList<Task> tasks){
         boolean fileExists = java.nio.file.Files.exists(filePath);
         if (fileExists) {
             int i = 0;
@@ -31,19 +31,19 @@ public abstract class ReadFromFile {
         }
     }
 
-    public static void scanMem(ArrayList<Task> tasks, int i) throws FileNotFoundException {
+    private static void scanMem(ArrayList<Task> tasks, int i) throws FileNotFoundException {
         File file = new File(String.valueOf(filePath));
         Scanner fileObj = new Scanner(file);
         // Goes through every line of out.txt
         while (fileObj.hasNextLine()) {
             String task = fileObj.nextLine();
-            parse(tasks, task, i);
+            addToMem(tasks, task, i);
             i++;
         }
     }
 
     // Converts a line of out.txt to be added to tasks
-    public static void parse(ArrayList<Task> tasks, String task, int i){
+    private static void addToMem(ArrayList<Task> tasks, String task, int i){
         int indexOfTaskType = task.indexOf("[") + 1;
         int indexOfTaskState = task.indexOf("[",indexOfTaskType) + 1;
         int indexOfTaskDescription = task.indexOf("]",indexOfTaskState) + 1;
