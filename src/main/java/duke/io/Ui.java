@@ -1,11 +1,9 @@
 package duke.io;
 
-import duke.command.DukeException;
+import duke.exception.DukeException;
 import duke.task.Task;
 import duke.task.TaskList;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
@@ -34,22 +32,13 @@ public class Ui {
     public static void printBye(){
         System.out.println(" Bye. Hope to see you again soon!");
     }
-    public static void printTaskList(ArrayList<Task> tasks, int totalNumOfTasks) {
+    public static void printTaskList(String taskListAsString) {
         System.out.println("Here are the tasks in your list:");
-        // Get some method from storage to read
-        for (int i = 0; i < totalNumOfTasks; i ++){
-            System.out.println(i+1 + "." + tasks.get(i).toString());
-        }
-        if (totalNumOfTasks == 0){
-            System.out.println("Please feed me ...");
-        }
+        System.out.print(taskListAsString);
     }
     public static String getUserCommand(){
         Scanner in = new Scanner(System.in);
         return in.nextLine();
-    }
-    public static void printCommandNotUnderstood(){
-        System.out.println(" Command's power level too high! Please try something else or improve my power level!");
     }
     public static void acknowledgeTaskDone(Task task) {
         System.out.println(" Nice! I've marked this task as done:");
@@ -61,7 +50,7 @@ public class Ui {
     }
     public static void acknowledgeTaskAdded (Task task) {
         System.out.println(" Got it. I've added this task: " + System.lineSeparator() + "   " + task.toString());
-        System.out.println(" Now you have " + Task.getTotalNumOfTasks() + " tasks in the list.");
+        System.out.println(" Now you have " + TaskList.getTotalNumOfTasks() + " tasks in the list.");
         System.out.println(" Remember, you can enter \"list\" to view all tasks");
     }
 
@@ -76,13 +65,19 @@ public class Ui {
     public static void printDukeException(DukeException exception) {
         System.out.println(exception.toString());
     }
-    public static void printEmptyCommandException() {
-        System.out.println(" Stop feeding me emptiness");
-    }
     public static void printOutOfIndexCommandException() {
         System.out.println(" Stop feeding me things that do not exist!");
     }
-    public static void throwDukeException(TaskList.typeOfTasks typeOfEntry) throws DukeException{
-        throw new DukeException("Please enter a proper " + typeOfEntry);
+    public static void printUnsupportedCommandException(){
+        System.out.println(" Command's power level too high! Please try something else or improve my power level!");
+    }
+    public static void printNumberException(){
+        System.out.println(" I can only take a number!");
+    }
+    public static void printEmptyCommandException(){
+        System.out.println(" Stop feeding me emptiness");
+    }
+    public static void printPartiallyCorrectCommandException(){
+        System.out.println(" Correct root command but something is wrong");
     }
 }

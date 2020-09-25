@@ -1,4 +1,4 @@
-package duke.command;
+package duke.exception;
 
 public class IllegalDescriptionException extends DukeException{
     public IllegalDescriptionException(String message) {
