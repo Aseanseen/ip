@@ -37,8 +37,10 @@ public abstract class ReadFromFile{
         // Goes through every line of out.txt
         while (fileObj.hasNextLine()) {
             String task = fileObj.nextLine();
-            addToMem(tasks, task, i);
-            i++;
+            if (!task.isBlank()) {
+                addToMem(tasks, task, i);
+                i++;
+            }
         }
     }
 
