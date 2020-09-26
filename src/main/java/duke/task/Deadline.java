@@ -1,5 +1,9 @@
 package duke.task;
 
+/**
+ * Represents a Deadline Task in Duke.
+ * Guarantees: Deadline description, Date and Time is present.
+ */
 public class Deadline extends Task{
     protected String by;
 

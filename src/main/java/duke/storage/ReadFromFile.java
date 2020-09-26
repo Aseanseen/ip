@@ -4,21 +4,25 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Represents an abstract class to read Tasks from Storage.
+ * Requirements: Needs an output file in the data folder.
+ */
 public abstract class ReadFromFile{
     final static int LENGTH_BY = 4;
     final static int LENGTH_AT = 4;
 
-    // File paths specified in an OS-independent way
+    /** Gets the file paths specified in an OS-independent way.  */
     static String root = System.getProperty("user.dir");
     static java.nio.file.Path filePath = java.nio.file.Paths.get(root, "data", "out.txt");
 
+    /** Checks if the output file exists and if it exists, reads it.  */
     public static void readMem(ArrayList<Task> tasks){
         boolean fileExists = java.nio.file.Files.exists(filePath);
         if (fileExists) {
@@ -31,6 +35,7 @@ public abstract class ReadFromFile{
         }
     }
 
+    /** Reads the output file into tasks.  */
     private static void scanMem(ArrayList<Task> tasks, int i) throws FileNotFoundException {
         File file = new File(String.valueOf(filePath));
         Scanner fileObj = new Scanner(file);
@@ -44,7 +49,7 @@ public abstract class ReadFromFile{
         }
     }
 
-    // Converts a line of out.txt to be added to tasks
+    /** Converts a line in out.txt to be added to tasks.  */
     private static void addToMem(ArrayList<Task> tasks, String task, int i){
         int indexOfTaskType = task.indexOf("[") + 1;
         int indexOfTaskState = task.indexOf("[",indexOfTaskType) + 1;
@@ -78,7 +83,7 @@ public abstract class ReadFromFile{
             break;
         }
     }
-    // Updates the variable isDone of the Task class
+
     public static void updateIsDone(ArrayList<Task> tasks, int i, String taskIsDone) {
         if (taskIsDone.equals("1")) {
             tasks.get(i).markAsDone();

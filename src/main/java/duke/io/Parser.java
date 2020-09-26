@@ -1,12 +1,24 @@
 package duke.io;
 
-import duke.command.*;
+import duke.command.Command;
+import duke.command.DoneCommand;
+import duke.command.ExitCommand;
+import duke.command.ListCommand;
+import duke.command.DeleteCommand;
+import duke.command.AddCommand;
+import duke.command.UnknownCommand;
 import duke.exception.DukeException;
 import duke.task.TaskList;
-
 import java.util.Scanner;
 
+/**
+ * Represents a Parser class to make sense of the user's input.
+ */
 public class Parser {
+
+    /** Parses the user's input and decides on the Command.
+     * Returns null only if user input is empty.
+     */
     public Command parseCommand(String commandStr) {
         Command command = new Command();
         try {
@@ -22,7 +34,7 @@ public class Parser {
         return command;
     }
 
-    // Decides on the output for each command
+    /** Creates the command objects if possible.  */
     private static Command testCommand(String commandStr) throws DukeException {
         Scanner taskObj = new Scanner(commandStr);
         // Initialisation of enum
@@ -56,6 +68,7 @@ public class Parser {
                 break;
             default:
                 command = new UnknownCommand();
+                break;
             }
         }
         return command;
