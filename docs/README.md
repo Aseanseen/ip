@@ -2,39 +2,39 @@
 
 ## Features 
 
-### - Add Task
+### Add Task
 User is able to add a task to Duke
 
-#### Add ToDo
+#### [Add ToDo](https://github.com/Aseanseen/ip/tree/master/docs#todo-desc---add-a-todo)
 User is able to add a `ToDo`
 
-#### Add Event
+#### [Add Event](https://github.com/Aseanseen/ip/tree/master/docs#event-desc-at-date-time---add-a-event)
 User is able to add an `Event` with the Date and Time
 
-#### Add Deadline
+#### [Add Deadline](https://github.com/Aseanseen/ip/tree/master/docs#deadline-desc-by-date-time---add-a-deadline)
 User is able to add a `Deadline` with the Date and Time
 
-### - Delete Task
+### [Delete Task](https://github.com/Aseanseen/ip/tree/master/docs#delete-task_index---delete-a-task)
 User is able to delete a task
 
-### - List Task
+### [List Task](https://github.com/Aseanseen/ip/tree/master/docs#list---list-all-task)
 User is able to list out all tasks
 
-### - Done Task
+### [Done Task](https://github.com/Aseanseen/ip/tree/master/docs#done-task_index---mark-a-task-as-done)
 User is able to mark a task as done
 
-### - Find Task
+### [Find Task](https://github.com/Aseanseen/ip/tree/master/docs#find-search_term---find-all-task-that-matches-search)
 User is able to list out all tasks that match the search term specified
 
 ## Usage
 
-### `todo <desc>` - Add a `ToDo`
+### `todo <desc>`
 
-Add a ToDo task to Duke
+Add a `ToDo` task to Duke
 
 >Example of usage: 
 
-`todo read math notes`
+>`todo read math notes`
 
 >Expected outcome:
 ```
@@ -44,13 +44,13 @@ Add a ToDo task to Duke
  Remember, you can enter "list" to view all tasks
 ```
 
-### `event <desc> /at <date> <time>` - Add a `Event`
+### `event <desc> /at <date> <time>`
 
-Add an Event task to Duke
+Add an `Event` task to Duke
 
 >Example of usage: 
 
-`event prom /at 20-2-2020 1800`
+>`event prom /at 20-2-2020 1800`
 
 >Expected outcome:
 ```
@@ -60,13 +60,13 @@ Add an Event task to Duke
  Remember, you can enter "list" to view all tasks
 ```
 
-### `deadline <desc> /by <date> <time>` - Add a `Deadline`
+### `deadline <desc> /by <date> <time>`
 
-Add an Deadline task to Duke
+Add a `Deadline` task to Duke
 
 >Example of usage: 
 
-`deadline do math quiz /by 2-12-2020 1215`
+>`deadline do math quiz /by 2-12-2020 1215`
 
 >Expected outcome:
 ```
@@ -76,13 +76,13 @@ Add an Deadline task to Duke
  Remember, you can enter "list" to view all tasks
 ```
 
-### `delete <task_index>` - Delete a `Task`
+### `delete <task_index>`
 
-Delete a task
+Delete a `Task`
 
 >Example of usage: 
 
-`delete 1`
+>`delete 1`
 
 >Expected outcome:
 ```
@@ -90,13 +90,13 @@ Delete a task
    [T][✘] read math notes
 ```
 
-### `list` - List all `Task`
+### `list`
 
-List all the tasks entered
+List all the `Task` entered
 
 >Example of usage: 
 
-`list`
+>`list`
 
 >Expected outcome:
 ```
@@ -104,13 +104,13 @@ List all the tasks entered
 2.[D][✓] do quiz (by: Dec 2 2020 12:15)
 ```
 
-### `done <task_index>` - Mark a `Task` as Done
+### `done <task_index>`
 
-Mark a task as Done
+Mark a `Task` as Done
 
 >Example of usage: 
 
-`done 1`
+>`done 1`
 
 >Expected outcome:
 ```
@@ -118,13 +118,13 @@ Mark a task as Done
    [D][✓] do quiz (by: Dec 2 2020 12:15)
 ```
 
-### `find <search_term>` - Find all `Task` that matches search
+### `find <search_term>`
 
-List all of the tasks that matches the search
+List all of the `Task` that matches the search
 
 >Example of usage: 
 
-`find book`
+>`find book`
 
 >Expected outcome:
 ```
