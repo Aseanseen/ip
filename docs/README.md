@@ -5,25 +5,25 @@
 ### Add Task
 User is able to add a task to Duke
 
-#### [Add ToDo](https://github.com/Aseanseen/ip/tree/master/docs#todo-desc---add-a-todo)
+#### Add ToDo
 User is able to add a `ToDo`
 
-#### [Add Event](https://github.com/Aseanseen/ip/tree/master/docs#event-desc-at-date-time---add-a-event)
+#### Add Event
 User is able to add an `Event` with the Date and Time
 
-#### [Add Deadline](https://github.com/Aseanseen/ip/tree/master/docs#deadline-desc-by-date-time---add-a-deadline)
+#### Add Deadline
 User is able to add a `Deadline` with the Date and Time
 
-### [Delete Task](https://github.com/Aseanseen/ip/tree/master/docs#delete-task_index---delete-a-task)
+### Delete Task
 User is able to delete a task
 
-### [List Task](https://github.com/Aseanseen/ip/tree/master/docs#list---list-all-task)
+### List Task
 User is able to list out all tasks
 
-### [Done Task](https://github.com/Aseanseen/ip/tree/master/docs#done-task_index---mark-a-task-as-done)
+### Done Task
 User is able to mark a task as done
 
-### [Find Task](https://github.com/Aseanseen/ip/tree/master/docs#find-search_term---find-all-task-that-matches-search)
+### Find Task
 User is able to list out all tasks that match the search term specified
 
 ## Usage
@@ -33,7 +33,6 @@ User is able to list out all tasks that match the search term specified
 Add a `ToDo` task to Duke
 
 >Example of usage: 
-
 >`todo read math notes`
 
 >Expected outcome:
@@ -49,7 +48,6 @@ Add a `ToDo` task to Duke
 Add an `Event` task to Duke
 
 >Example of usage: 
-
 >`event prom /at 20-2-2020 1800`
 
 >Expected outcome:
@@ -65,7 +63,6 @@ Add an `Event` task to Duke
 Add a `Deadline` task to Duke
 
 >Example of usage: 
-
 >`deadline do math quiz /by 2-12-2020 1215`
 
 >Expected outcome:
@@ -81,7 +78,6 @@ Add a `Deadline` task to Duke
 Delete a `Task`
 
 >Example of usage: 
-
 >`delete 1`
 
 >Expected outcome:
@@ -95,7 +91,6 @@ Delete a `Task`
 List all the `Task` entered
 
 >Example of usage: 
-
 >`list`
 
 >Expected outcome:
@@ -109,7 +104,6 @@ List all the `Task` entered
 Mark a `Task` as Done
 
 >Example of usage: 
-
 >`done 1`
 
 >Expected outcome:
@@ -123,7 +117,6 @@ Mark a `Task` as Done
 List all of the `Task` that matches the search
 
 >Example of usage: 
-
 >`find book`
 
 >Expected outcome:
