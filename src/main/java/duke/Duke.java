@@ -6,7 +6,6 @@ import duke.io.Parser;
 import duke.io.Ui;
 import duke.storage.Storage;
 import duke.task.TaskList;
-
 import java.util.NoSuchElementException;
 
 public class Duke {

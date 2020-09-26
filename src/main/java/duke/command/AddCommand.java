@@ -9,6 +9,9 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.TaskList;
 import duke.task.ToDo;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class AddCommand extends Command{
     final static int LENGTH_TODO = 4;
@@ -17,7 +20,10 @@ public class AddCommand extends Command{
 
     private TaskList.typeOfTasks typeOfTask;
     private String taskDescription;
-    private String taskAtOrBy;
+    private LocalDateTime taskAtOrBy;
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-M-yyyy HHmm");
+
     public AddCommand(String commandStr,TaskList.typeOfTasks typeOfTask) throws DukeException {
         switch (typeOfTask) {
         case EVENT:
@@ -64,7 +70,7 @@ public class AddCommand extends Command{
     private void testTask(String command, TaskList.typeOfTasks typeOfTask, String splitter, int lengthOfRootCommand) throws DukeException {
         if (typeOfTask == TaskList.typeOfTasks.TODO){
             String taskDescription = command.substring(lengthOfRootCommand).stripLeading().stripTrailing();
-            checkDukeException(typeOfTask, taskDescription, null);
+            checkDukeException(typeOfTask, taskDescription, null, null);
             this.taskDescription = taskDescription;
         } else {
             int indexOfAtOrBy = command.indexOf(splitter);
@@ -74,9 +80,10 @@ public class AddCommand extends Command{
             }
             String taskDescription = command.substring(lengthOfRootCommand, indexOfAtOrBy).stripLeading().stripTrailing();
             String taskAtOrBy = command.substring(indexOfAtOrBy + splitter.length()).stripLeading().stripTrailing();
-            checkDukeException(typeOfTask, taskDescription, taskAtOrBy);
+
+            checkDukeException(typeOfTask, taskDescription, taskAtOrBy, formatter);
             this.taskDescription = taskDescription;
-            this.taskAtOrBy = taskAtOrBy;
+            this.taskAtOrBy = LocalDateTime.parse(taskAtOrBy, formatter);
         }
     }
 
@@ -97,20 +104,26 @@ public class AddCommand extends Command{
     }
 
     // Combines checkDateTime and checkDescription
-    private static void checkDukeException(TaskList.typeOfTasks entryType, String taskDescription, String taskDateTime) throws DukeException {
+    private void checkDukeException(TaskList.typeOfTasks entryType, String taskDescription, String taskDateTime, DateTimeFormatter formatter) throws DukeException {
         if (!entryType.equals(TaskList.typeOfTasks.TODO)) {
-            checkDateTime(entryType, taskDateTime);
+            checkDateTime(entryType, taskDateTime, formatter);
         }
         checkDescription(entryType, taskDescription);
     }
-    // Checks for empty date/time
-    private static void checkDateTime(TaskList.typeOfTasks entryType, String taskDateTime) throws IllegalDateTimeException {
+    // Checks for bad date/time
+    private void checkDateTime(TaskList.typeOfTasks entryType, String taskDateTime, DateTimeFormatter formatter) throws IllegalDateTimeException {
         if (taskDateTime.isEmpty()){
             throw new IllegalDateTimeException(entryType.toString());
+        } else {
+            try {
+                LocalDateTime.parse(taskDateTime, formatter);
+            } catch (DateTimeParseException dateTimeException) {
+                throw new IllegalDateTimeException(entryType.toString());
+            }
         }
     }
     // Checks for empty description
-    private static void checkDescription(TaskList.typeOfTasks entryType, String taskDescription) throws IllegalDescriptionException {
+    private void checkDescription(TaskList.typeOfTasks entryType, String taskDescription) throws IllegalDescriptionException {
         if (taskDescription.isEmpty()){
             throw new IllegalDescriptionException(entryType.toString());
         }
