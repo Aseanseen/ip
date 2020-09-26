@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents a AddCommand class to handle all creation of Tasks.
+ * Guarantees: Task to be added obeys all restrictions.
+ */
 public class AddCommand extends Command{
     final static int LENGTH_TODO = 4;
     final static int LENGTH_DEADLINE = 8;
@@ -24,6 +28,7 @@ public class AddCommand extends Command{
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-M-yyyy HHmm");
 
+    /** Tests the creation of the tasks.  */
     public AddCommand(String commandStr,TaskList.typeOfTasks typeOfTask) throws DukeException {
         switch (typeOfTask) {
         case EVENT:
@@ -39,6 +44,9 @@ public class AddCommand extends Command{
         this.typeOfTask = typeOfTask;
     }
 
+    /** Overrides the execute() of the Command class.
+     * Adds the respective tasks.
+     */
     @Override
     public void execute() {
         Task task;
@@ -61,13 +69,18 @@ public class AddCommand extends Command{
     private void testEvent(String command, TaskList.typeOfTasks typeOfTask) throws DukeException {
         testTask(command, typeOfTask, "/at", LENGTH_EVENT);
     }
+
     private void testToDo(String command, TaskList.typeOfTasks typeOfTask) throws DukeException {
         testTask(command, typeOfTask,null, LENGTH_TODO);
     }
+
     private void testDeadline(String command, TaskList.typeOfTasks typeOfTask) throws DukeException {
         testTask(command, typeOfTask, "/by", LENGTH_DEADLINE);
     }
+
+    /** Combines the test for Event, ToDo, Deadline.  */
     private void testTask(String command, TaskList.typeOfTasks typeOfTask, String splitter, int lengthOfRootCommand) throws DukeException {
+        // Only Event and Deadline checks for /at or /by in the input
         if (typeOfTask == TaskList.typeOfTasks.TODO){
             String taskDescription = command.substring(lengthOfRootCommand).stripLeading().stripTrailing();
             checkDukeException(typeOfTask, taskDescription, null, null);
@@ -92,26 +105,29 @@ public class AddCommand extends Command{
         TaskList.addTask(event);
         return event;
     }
+
     private Task addDeadline() {
         Deadline deadline = new Deadline(taskDescription, taskAtOrBy);
         TaskList.addTask(deadline);
         return deadline;
     }
+
     private Task addToDo() {
         ToDo toDo = new ToDo(taskDescription);
         TaskList.addTask(toDo);
         return toDo;
     }
 
-    // Combines checkDateTime and checkDescription
-    private void checkDukeException(TaskList.typeOfTasks entryType, String taskDescription, String taskDateTime, DateTimeFormatter formatter) throws DukeException {
+    /**  Combines checkDateTime and checkDescription and throws DukeException  */
+    private static void checkDukeException(TaskList.typeOfTasks entryType, String taskDescription, String taskDateTime, DateTimeFormatter formatter) throws DukeException {
         if (!entryType.equals(TaskList.typeOfTasks.TODO)) {
             checkDateTime(entryType, taskDateTime, formatter);
         }
         checkDescription(entryType, taskDescription);
     }
-    // Checks for bad date/time
-    private void checkDateTime(TaskList.typeOfTasks entryType, String taskDateTime, DateTimeFormatter formatter) throws IllegalDateTimeException {
+
+    /** Checks for empty date/time  */
+    private static void checkDateTime(TaskList.typeOfTasks entryType, String taskDateTime, DateTimeFormatter formatter) throws IllegalDateTimeException {
         if (taskDateTime.isEmpty()){
             throw new IllegalDateTimeException(entryType.toString());
         } else {
@@ -122,8 +138,9 @@ public class AddCommand extends Command{
             }
         }
     }
-    // Checks for empty description
-    private void checkDescription(TaskList.typeOfTasks entryType, String taskDescription) throws IllegalDescriptionException {
+
+    /** Checks for empty description  */
+    private static void checkDescription(TaskList.typeOfTasks entryType, String taskDescription) throws IllegalDescriptionException {
         if (taskDescription.isEmpty()){
             throw new IllegalDescriptionException(entryType.toString());
         }

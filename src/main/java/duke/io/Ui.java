@@ -6,13 +6,22 @@ import duke.task.TaskList;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Ui {
+/**
+ * Represents an abstract Ui class to handle interactions between the user and Duke.
+ */
+public abstract class Ui {
     final static int SIZE_LINE = 90;
+
+    public static String getUserCommand(){
+        Scanner in = new Scanner(System.in);
+        return in.nextLine();
+    }
 
     public static void printLine() {
         String dash = "\u2500";
         System.out.println(dash.repeat(SIZE_LINE));
     }
+
     public static void printInstructions() {
         System.out.println(" - Add a todo e.g. todo read book");
         System.out.println(" - Add a deadline e.g. deadline do quiz /by 2-12-2020 1215");
@@ -22,6 +31,7 @@ public class Ui {
         System.out.println(" - Delete a task e.g. delete 1");
         System.out.println(" - Say bye to me e.g. bye");
     }
+
     public static void printGreeting(){
         printLine();
         System.out.println(" Hello! I'm Duke");
@@ -29,25 +39,26 @@ public class Ui {
         printInstructions();
         printLine();
     }
+
     public static void printBye(){
         System.out.println(" Bye. Hope to see you again soon!");
     }
+
     public static void printTaskList(String taskListAsString) {
         System.out.println("Here are the tasks in your list:");
         System.out.print(taskListAsString);
     }
+
     public static void printMatchTaskList(String taskListAsString) {
         System.out.println("Here are the matching tasks in your list:");
         System.out.print(taskListAsString);
     }
-    public static String getUserCommand(){
-        Scanner in = new Scanner(System.in);
-        return in.nextLine();
-    }
+
     public static void acknowledgeTaskDone(Task task) {
         System.out.println(" Nice! I've marked this task as done:");
         System.out.println("   " + task.toString());
     }
+
     public static void printTaskAlrDone (Task task) {
         System.out.println(" This task has already been marked as done!");
         System.out.println("   " + task.toString());
@@ -62,25 +73,32 @@ public class Ui {
         System.out.println(" Ok! I have removed this task!");
         System.out.println("   " + task.toString());
     }
+
     public static void printFileException(IOException exception) {
-        System.out.println ("Error updating Task list.");
+        System.out.println (" Error updating Task list.");
         exception.printStackTrace ();
     }
+
     public static void printDukeException(DukeException exception) {
         System.out.println(exception.toString());
     }
+
     public static void printOutOfIndexCommandException() {
         System.out.println(" Stop feeding me things that do not exist!");
     }
+
     public static void printUnsupportedCommandException(){
         System.out.println(" Command's power level too high! Please try something else or improve my power level!");
     }
+
     public static void printNumberException(){
         System.out.println(" I can only take a number!");
     }
+
     public static void printEmptyCommandException(){
         System.out.println(" Stop feeding me emptiness");
     }
+
     public static void printPartiallyCorrectCommandException(){
         System.out.println(" Correct root command but something is wrong");
     }

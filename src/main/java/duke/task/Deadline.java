@@ -3,6 +3,10 @@ package duke.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a Deadline Task in Duke.
+ * Guarantees: Deadline description, Date and Time is present.
+ */
 public class Deadline extends Task{
     private LocalDateTime by;
     final private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
