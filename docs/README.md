@@ -32,8 +32,10 @@ User is able to list out all tasks that match the search term specified
 
 Add a `ToDo` task to Duke
 
->Example of usage: 
->`todo read math notes`
+>Example of usage:
+```
+todo read math notes
+```
 
 >Expected outcome:
 ```
@@ -47,8 +49,10 @@ Add a `ToDo` task to Duke
 
 Add an `Event` task to Duke
 
->Example of usage: 
->`event prom /at 20-2-2020 1800`
+>Example of usage:
+```
+event prom /at 20-2-2020 1800
+```
 
 >Expected outcome:
 ```
@@ -62,8 +66,10 @@ Add an `Event` task to Duke
 
 Add a `Deadline` task to Duke
 
->Example of usage: 
->`deadline do math quiz /by 2-12-2020 1215`
+>Example of usage:
+```
+deadline do math quiz /by 2-12-2020 1215
+```
 
 >Expected outcome:
 ```
@@ -77,8 +83,10 @@ Add a `Deadline` task to Duke
 
 Delete a `Task`
 
->Example of usage: 
->`delete 1`
+>Example of usage:
+```
+delete 1
+```
 
 >Expected outcome:
 ```
@@ -90,8 +98,9 @@ Delete a `Task`
 
 List all the `Task` entered
 
->Example of usage: 
->`list`
+>Example of usage:
+```list
+```
 
 >Expected outcome:
 ```
@@ -103,8 +112,10 @@ List all the `Task` entered
 
 Mark a `Task` as Done
 
->Example of usage: 
->`done 1`
+>Example of usage:
+```
+done 1
+```
 
 >Expected outcome:
 ```
@@ -116,8 +127,10 @@ Mark a `Task` as Done
 
 List all of the `Task` that matches the search
 
->Example of usage: 
->`find book`
+>Example of usage:
+```
+find book
+```
 
 >Expected outcome:
 ```
