@@ -24,8 +24,9 @@ public class ListCommand extends Command{
 
     private static String getTaskListAsString(ArrayList<Task> tasks) {
         String s = "";
-        if (TaskList.getTotalNumOfTasks() != 0) {
-            for (int i = 0; i < TaskList.getTotalNumOfTasks(); i++) {
+        int size = TaskList.getTotalNumOfTasks();
+        if (size != 0) {
+            for (int i = 0; i < size; i++) {
                 String line = i + 1 + "." + tasks.get(i).toString() + System.lineSeparator();
                 s += line;
             }

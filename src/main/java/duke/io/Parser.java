@@ -7,6 +7,7 @@ import duke.command.ListCommand;
 import duke.command.DeleteCommand;
 import duke.command.AddCommand;
 import duke.command.UnknownCommand;
+import duke.command.FindCommand;
 import duke.exception.DukeException;
 import duke.task.TaskList;
 import java.util.Scanner;
@@ -65,6 +66,9 @@ public class Parser {
             case "event":
                 typeOfTask = TaskList.typeOfTasks.EVENT;
                 command = new AddCommand(commandStr, typeOfTask);
+                break;
+            case "find":
+                command = new FindCommand(taskObj);
                 break;
             default:
                 command = new UnknownCommand();

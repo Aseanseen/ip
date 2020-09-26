@@ -24,8 +24,8 @@ public abstract class Ui {
 
     public static void printInstructions() {
         System.out.println(" - Add a todo e.g. todo read book");
-        System.out.println(" - Add a deadline e.g. deadline do quiz /by 1st Sept");
-        System.out.println(" - Add an event e.g. event prom /at Mon 6pm");
+        System.out.println(" - Add a deadline e.g. deadline do quiz /by 2-12-2020 1215");
+        System.out.println(" - Add an event e.g. event prom /at 20-2-2020 1800");
         System.out.println(" - List all added tasks e.g. list");
         System.out.println(" - Complete a task e.g. done 1");
         System.out.println(" - Delete a task e.g. delete 1");
@@ -46,6 +46,11 @@ public abstract class Ui {
 
     public static void printTaskList(String taskListAsString) {
         System.out.println("Here are the tasks in your list:");
+        System.out.print(taskListAsString);
+    }
+
+    public static void printMatchTaskList(String taskListAsString) {
+        System.out.println("Here are the matching tasks in your list:");
         System.out.print(taskListAsString);
     }
 

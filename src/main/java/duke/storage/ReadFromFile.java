@@ -7,6 +7,8 @@ import duke.task.ToDo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,8 +21,10 @@ public abstract class ReadFromFile{
     final static int LENGTH_AT = 4;
 
     /** Gets the file paths specified in an OS-independent way.  */
-    static String root = System.getProperty("user.dir");
-    static java.nio.file.Path filePath = java.nio.file.Paths.get(root, "data", "out.txt");
+    final static String root = System.getProperty("user.dir");
+    final static java.nio.file.Path filePath = java.nio.file.Paths.get(root, "data", "out.txt");
+
+    final private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
 
     /** Checks if the output file exists and if it exists, reads it.  */
     public static void readMem(ArrayList<Task> tasks){
@@ -70,7 +74,7 @@ public abstract class ReadFromFile{
             String eventDescription = task.substring(indexOfTaskDescription, indexOfAt).stripLeading().stripTrailing();
             String eventAt = task.substring(indexOfAt + LENGTH_AT).stripLeading().stripTrailing();
             eventAt = eventAt.substring(0,eventAt.length()-1);
-            tasks.add(new Event(eventDescription,eventAt));
+            tasks.add(new Event(eventDescription, LocalDateTime.parse(eventAt,formatter)));
             updateIsDone(tasks, i, taskIsDone);
             break;
         case "D":
@@ -78,7 +82,7 @@ public abstract class ReadFromFile{
             String deadlineDescription = task.substring(indexOfTaskDescription, indexOfBy).stripLeading().stripTrailing();
             String deadlineBy = task.substring(indexOfBy + LENGTH_BY).stripLeading().stripTrailing();
             deadlineBy = deadlineBy.substring(0,deadlineBy.length()-1);
-            tasks.add(new Deadline(deadlineDescription,deadlineBy));
+            tasks.add(new Deadline(deadlineDescription,LocalDateTime.parse(deadlineBy,formatter)));
             updateIsDone(tasks, i, taskIsDone);
             break;
         }

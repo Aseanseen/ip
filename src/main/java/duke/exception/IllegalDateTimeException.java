@@ -10,6 +10,6 @@ public class IllegalDateTimeException extends DukeException{
     }
     @Override
     public String toString(){
-        return super.toString() + " needs the date/time!";
+        return super.toString() + " needs the date and time!";
     }
 }
