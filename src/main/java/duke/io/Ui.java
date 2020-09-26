@@ -36,6 +36,10 @@ public class Ui {
         System.out.println("Here are the tasks in your list:");
         System.out.print(taskListAsString);
     }
+    public static void printMatchTaskList(String taskListAsString) {
+        System.out.println("Here are the matching tasks in your list:");
+        System.out.print(taskListAsString);
+    }
     public static String getUserCommand(){
         Scanner in = new Scanner(System.in);
         return in.nextLine();

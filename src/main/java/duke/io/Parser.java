@@ -54,8 +54,12 @@ public class Parser {
                 typeOfTask = TaskList.typeOfTasks.EVENT;
                 command = new AddCommand(commandStr, typeOfTask);
                 break;
+            case "find":
+                command = new FindCommand(taskObj);
+                break;
             default:
                 command = new UnknownCommand();
+                break;
             }
         }
         return command;
