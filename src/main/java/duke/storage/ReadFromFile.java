@@ -27,7 +27,7 @@ public abstract class ReadFromFile{
     final private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
 
     /** Checks if the output file exists and if it exists, reads it.  */
-    public static void readMem(ArrayList<Task> tasks){
+    public static void readMem(ArrayList<Task> tasks) {
         boolean fileExists = java.nio.file.Files.exists(filePath);
         if (fileExists) {
             int i = 0;
@@ -54,7 +54,7 @@ public abstract class ReadFromFile{
     }
 
     /** Converts a line in out.txt to be added to tasks.  */
-    private static void addToMem(ArrayList<Task> tasks, String task, int i){
+    private static void addToMem(ArrayList<Task> tasks, String task, int i) {
         int indexOfTaskType = task.indexOf("[") + 1;
         int indexOfTaskState = task.indexOf("[",indexOfTaskType) + 1;
         int indexOfTaskDescription = task.indexOf("]",indexOfTaskState) + 1;

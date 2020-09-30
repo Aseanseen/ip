@@ -8,11 +8,11 @@ import java.util.Scanner;
 /**
  * Represents a DoneCommand class to handle the done status of Tasks.
  */
-public class DoneCommand extends Command{
+public class DoneCommand extends Command {
     private Task taskToBeDone;
 
     /** Gets the Task to be done and throws exception if it does not exist.  */
-    public DoneCommand(Scanner taskObj) throws IndexOutOfBoundsException{
+    public DoneCommand(Scanner taskObj) throws IndexOutOfBoundsException {
         int taskArrayNum = Integer.parseInt(taskObj.next()) - 1;
         taskToBeDone = TaskList.getTaskList().get(taskArrayNum);
     }
@@ -22,7 +22,7 @@ public class DoneCommand extends Command{
      */
     @Override
     public void execute() {
-        if (taskToBeDone.getIsDone()){
+        if (taskToBeDone.getIsDone()) {
             Ui.printTaskAlrDone(taskToBeDone);
         } else {
             TaskList.markTaskAsDone(taskToBeDone);

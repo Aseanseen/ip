@@ -25,7 +25,7 @@ public class Storage {
     }
 
     /** Creates the output directory if it has not been created  */
-    public static void start(){
+    public static void start() {
         boolean isDirMade = Files.exists(dirPath);
         // Check if directory exists, if not create it
         if (!isDirMade){

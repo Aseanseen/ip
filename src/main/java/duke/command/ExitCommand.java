@@ -5,7 +5,7 @@ import duke.io.Ui;
 /**
  * Represents a ExitCommand class to handle the exit of Duke.
  */
-public class ExitCommand extends Command{
+public class ExitCommand extends Command {
     public ExitCommand(){
     }
 

@@ -49,7 +49,7 @@ public class Duke {
                 command.execute();
             } catch (NullPointerException exception) {
                 Ui.printEmptyCommandException();
-            } catch (NoSuchElementException exception){
+            } catch (NoSuchElementException exception) {
                 Ui.printPartiallyCorrectCommandException();
             } finally {
                 Ui.printLine();

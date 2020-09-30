@@ -8,15 +8,24 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class FindCommand extends Command{
+/**
+ * Represents a FindCommand class to handle all searches of tasks.
+ */
+public class FindCommand extends Command {
     private String filterString;
-    public FindCommand(Scanner taskObj) throws IndexOutOfBoundsException{
+
+    /** Gets the filter String and throws exception if it does not exist.  */
+    public FindCommand(Scanner taskObj) throws IndexOutOfBoundsException {
         if (taskObj.hasNext()) {
             filterString = taskObj.nextLine().stripLeading().stripTrailing();
         } else {
             throw new IndexOutOfBoundsException();
         }
     }
+
+    /** Overrides the execute() of the Command class.
+     * Finds the respective tasks.
+     */
     @Override
     public void execute() {
         ArrayList<Task> tasks = TaskList.getTaskList();
@@ -26,6 +35,7 @@ public class FindCommand extends Command{
         String matchedTaskAsString = getTaskListAsString(matchedTasks);
         Ui.printMatchTaskList(matchedTaskAsString);
     }
+
     private static String getTaskListAsString(List<Task> matchedTasks) {
         String s = "";
         int size = matchedTasks.size();

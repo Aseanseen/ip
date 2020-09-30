@@ -27,9 +27,9 @@ public class Parser {
             // Illegal command parameters
         } catch (IndexOutOfBoundsException exception) {
             Ui.printOutOfIndexCommandException();
-        } catch (DukeException exception){
+        } catch (DukeException exception) {
             Ui.printDukeException(exception);
-        } catch (NumberFormatException exception){
+        } catch (NumberFormatException exception) {
             Ui.printNumberException();
         }
         return command;

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Represents an abstract class to write to the Storage of Duke.
  * Guarantees: Output file is made.
  */
-public abstract class WriteToFile{
+public abstract class WriteToFile {
 
     static String root = System.getProperty("user.dir");
     static java.nio.file.Path dirPath = java.nio.file.Paths.get(root, "data");
@@ -22,9 +22,9 @@ public abstract class WriteToFile{
         for (int i = 0; i < totalNumOfTasks; i ++) {
             String toSave = tasks.get(i).toString();
             // Replaces the ✓ with 1, ✘ with 0
-            if (toSave.contains("\u2713")){
+            if (toSave.contains("\u2713")) {
                 toSave = toSave.replace("\u2713","1");
-            } else if (toSave.contains("\u2718")){
+            } else if (toSave.contains("\u2718")) {
                 toSave = toSave.replace("\u2718","0");
             }
             fw.write(i+1 + "." + toSave);

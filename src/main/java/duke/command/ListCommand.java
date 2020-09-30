@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Represents a ListCommand class to list out the tasks in Duke.
  */
-public class ListCommand extends Command{
+public class ListCommand extends Command {
     public ListCommand() {
     }
 

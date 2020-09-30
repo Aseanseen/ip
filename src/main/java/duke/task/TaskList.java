@@ -16,15 +16,15 @@ public class TaskList {
     }
 
     /** Loads the Tasks into the ArrayList tasks from Storage */
-    public static void loadTasks(){
+    public static void loadTasks() {
         Storage.loadMem(tasks);
     }
 
-    public static int getTotalNumOfTasks(){
+    public static int getTotalNumOfTasks() {
         return tasks.size();
     }
 
-    public static ArrayList<Task> getTaskList(){
+    public static ArrayList<Task> getTaskList() {
         return tasks;
     }
 
@@ -33,12 +33,12 @@ public class TaskList {
         Storage.updateFile(tasks, TaskList.getTotalNumOfTasks());
     }
 
-    public static void removeTask(int taskNum) throws IndexOutOfBoundsException{
+    public static void removeTask(int taskNum) throws IndexOutOfBoundsException {
         tasks.remove(taskNum);
         Storage.updateFile(tasks, TaskList.getTotalNumOfTasks());
     }
 
-    public static void markTaskAsDone(Task task) throws IndexOutOfBoundsException{
+    public static void markTaskAsDone(Task task) throws IndexOutOfBoundsException {
         task.markAsDone();
         Storage.updateFile(tasks, TaskList.getTotalNumOfTasks());
     }

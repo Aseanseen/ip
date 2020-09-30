@@ -17,7 +17,7 @@ import java.time.format.DateTimeParseException;
  * Represents a AddCommand class to handle all creation of Tasks.
  * Guarantees: Task to be added obeys all restrictions.
  */
-public class AddCommand extends Command{
+public class AddCommand extends Command {
     final static int LENGTH_TODO = 4;
     final static int LENGTH_DEADLINE = 8;
     final static int LENGTH_EVENT = 5;

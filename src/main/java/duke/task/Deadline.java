@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 public class Deadline extends Task{
     private LocalDateTime by;
     final private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
+
     public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
