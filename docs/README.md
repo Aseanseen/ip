@@ -99,7 +99,8 @@ delete 1
 List all the `Task` entered
 
 >Example of usage:
-```list
+```
+list
 ```
 
 >Expected outcome:
