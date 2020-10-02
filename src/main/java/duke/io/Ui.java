@@ -11,9 +11,9 @@ import java.util.Scanner;
  */
 public abstract class Ui {
     final static int SIZE_LINE = 90;
+    private static Scanner in = new Scanner(System.in);
 
     public static String getUserCommand() {
-        Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
 
@@ -29,6 +29,7 @@ public abstract class Ui {
         System.out.println(" - List all added tasks e.g. list");
         System.out.println(" - Complete a task e.g. done 1");
         System.out.println(" - Delete a task e.g. delete 1");
+        System.out.println(" - Find a task e.g. find book");
         System.out.println(" - Say bye to me e.g. bye");
     }
 

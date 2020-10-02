@@ -9,7 +9,8 @@ public class UnknownCommand extends Command {
     public UnknownCommand() {
     }
 
-    /** Overrides the execute() of the Command class.
+    /**
+     * Overrides the execute() of the Command class.
      * Prints to the user that the command entered is not supported.
      */
     @Override

@@ -31,9 +31,11 @@ public class Duke {
         runCommandLoopUntilExitCommand();
     }
 
-    /** Reads the user command and parses it.
+    /**
+     * Reads the user command and parses it.
      * The parser creates a Command object and executes it
-     * until the user issues the exit command.  */
+     * until the user issues the exit command.
+     */
     private void runCommandLoopUntilExitCommand() {
         String commandString;
         Parser parser = new Parser();

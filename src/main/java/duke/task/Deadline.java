@@ -16,6 +16,11 @@ public class Deadline extends Task{
         this.by = by;
     }
 
+    /**
+     * Overrides the toString() of the Task class.
+     *
+     * @return String containing type of Task and amended DateTime format.
+     */
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by.format(formatter) + ")";

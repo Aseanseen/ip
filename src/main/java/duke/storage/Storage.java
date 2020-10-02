@@ -15,7 +15,12 @@ public class Storage {
     static String root = System.getProperty("user.dir");
     static java.nio.file.Path dirPath = java.nio.file.Paths.get(root, "data");
 
-    /** Updates the output file  */
+    /**
+     * Updates the output file to add, remove or mark a Task as done.
+     *
+     * @param tasks ArrayList of Task.
+     * @param totalNumOfTasks int of total number of tasks.
+     */
     public static void updateFile(ArrayList<Task> tasks, int totalNumOfTasks) {
         try {
             WriteToFile.writeList(tasks, totalNumOfTasks);

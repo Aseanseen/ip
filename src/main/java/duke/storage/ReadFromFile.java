@@ -26,7 +26,11 @@ public abstract class ReadFromFile{
 
     final private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
 
-    /** Checks if the output file exists and if it exists, reads it.  */
+    /**
+     * Checks if the output file exists and if it exists, reads it.
+     *
+     * @param tasks ArrayList of Task.
+     */
     public static void readMem(ArrayList<Task> tasks) {
         boolean fileExists = java.nio.file.Files.exists(filePath);
         if (fileExists) {
@@ -39,7 +43,13 @@ public abstract class ReadFromFile{
         }
     }
 
-    /** Reads the output file into tasks.  */
+    /**
+     * Reads the output file into tasks.
+     *
+     * @param tasks ArrayList of Task.
+     * @param i Int iterator to go through each line of file.
+     * @throws FileNotFoundException
+     */
     private static void scanMem(ArrayList<Task> tasks, int i) throws FileNotFoundException {
         File file = new File(String.valueOf(filePath));
         Scanner fileObj = new Scanner(file);
@@ -53,7 +63,13 @@ public abstract class ReadFromFile{
         }
     }
 
-    /** Converts a line in out.txt to be added to tasks.  */
+    /**
+     * Converts a line in out.txt to be added to tasks.
+     *
+     * @param tasks ArrayList of Task.
+     * @param task String of a line in out.txt.
+     * @param i Int iterator to go through each task.
+     */
     private static void addToMem(ArrayList<Task> tasks, String task, int i) {
         int indexOfTaskType = task.indexOf("[") + 1;
         int indexOfTaskState = task.indexOf("[",indexOfTaskType) + 1;
@@ -63,6 +79,8 @@ public abstract class ReadFromFile{
         String taskIsDone = task.substring(indexOfTaskState,indexOfTaskState+1);
         String taskDescription = task.substring(indexOfTaskDescription);
 
+        // Adds Task based on the taskType
+        // Updates the isDone of every Task
         switch(taskType){
         case "T":
             String toDoDescription = taskDescription.stripLeading().stripTrailing();

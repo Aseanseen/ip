@@ -16,6 +16,11 @@ public class Event extends Task {
         this.at = at;
     }
 
+    /**
+     * Overrides the toString() of the Task class.
+     *
+     * @return String containing type of Task and amended DateTime format.
+     */
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (at: " + at.format(formatter) + ")";

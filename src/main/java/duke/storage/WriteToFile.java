@@ -15,7 +15,13 @@ public abstract class WriteToFile {
     static java.nio.file.Path dirPath = java.nio.file.Paths.get(root, "data");
     static java.nio.file.Path filePath = java.nio.file.Paths.get(String.valueOf(dirPath), "out.txt");
 
-    /** Called by Storage to make a FileWriter that writes to the output file  */
+    /**
+     * Called by Storage to make a FileWriter that writes to the output file.
+     *
+     * @param tasks ArrayList of Task.
+     * @param totalNumOfTasks int of total number of tasks.
+     * @throws IOException On file error
+     * */
     public static void writeList(ArrayList<Task> tasks, int totalNumOfTasks) throws IOException {
         FileWriter fw = new FileWriter(String.valueOf(filePath));
         // Writes task list to file

@@ -17,8 +17,12 @@ import java.util.Scanner;
  */
 public class Parser {
 
-    /** Parses the user's input and decides on the Command.
+    /**
+     * Parses the user's input and decides on the Command.
      * Returns null only if user input is empty.
+     *
+     * @param commandStr String of user input.
+     * @return Command object.
      */
     public Command parseCommand(String commandStr) {
         Command command = new Command();
@@ -35,7 +39,13 @@ public class Parser {
         return command;
     }
 
-    /** Creates the command objects if possible.  */
+    /**
+     * Creates the command objects if possible.
+     *
+     * @param commandStr String of user input.
+     * @return Command object.
+     * @throws DukeException if IllegalDateTime / IllegalDescription.
+     */
     private static Command testCommand(String commandStr) throws DukeException {
         Scanner taskObj = new Scanner(commandStr);
         // Initialisation of enum

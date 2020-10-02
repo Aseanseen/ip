@@ -14,7 +14,12 @@ import java.util.stream.Collectors;
 public class FindCommand extends Command {
     private String filterString;
 
-    /** Gets the filter String and throws exception if it does not exist.  */
+    /**
+     * Gets the filter String and throws exception if it does not exist.
+     *
+     * @param taskObj Scanner of the user input.
+     * @throws IndexOutOfBoundsException if the user input is empty.
+     */
     public FindCommand(Scanner taskObj) throws IndexOutOfBoundsException {
         if (taskObj.hasNext()) {
             filterString = taskObj.nextLine().stripLeading().stripTrailing();
@@ -23,8 +28,10 @@ public class FindCommand extends Command {
         }
     }
 
-    /** Overrides the execute() of the Command class.
-     * Finds the respective tasks.
+    /**
+     * Overrides the execute() of the Command class.
+     * Gets the matched tasks as a String.
+     * Prints the matched tasks.
      */
     @Override
     public void execute() {
@@ -36,6 +43,12 @@ public class FindCommand extends Command {
         Ui.printMatchTaskList(matchedTaskAsString);
     }
 
+    /**
+     * Converts task list to String to be printed out.
+     *
+     * @param matchedTasks List of Task that matched the filterString.
+     * @return String of the matchedTask list.
+     */
     private static String getTaskListAsString(List<Task> matchedTasks) {
         String s = "";
         int size = matchedTasks.size();

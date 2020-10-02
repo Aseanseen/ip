@@ -12,8 +12,10 @@ public class ListCommand extends Command {
     public ListCommand() {
     }
 
-    /** Overrides the execute() of the Command class.
-     * Lists out all of the tasks in Duke and prints it out for the user.
+    /**
+     * Overrides the execute() of the Command class.
+     * Gets all of the tasks in Duke as a String.
+     * Prints the tasks list.
      */
     @Override
     public void execute() {
@@ -22,6 +24,12 @@ public class ListCommand extends Command {
         Ui.printTaskList(taskListAsString);
     }
 
+    /**
+     * Converts task list to String to be printed out.
+     *
+     * @param tasks ArrayList of Task.
+     * @return String of the tasks list.
+     */
     private static String getTaskListAsString(ArrayList<Task> tasks) {
         String s = "";
         int size = TaskList.getTotalNumOfTasks();
